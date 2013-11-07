@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <title>Prueba</title>
+    </head>
+     
+    <body>
+  <div id="esto" draggable="true">Arrastrar esto a tu ordenador</div>  
+  <script>
+    function alarrastraresto (e ) {
+      e.dataTransfer.setData('DownloadURL', "image/gif:logo.gif:http://www.programacionweb.net/logo_pweb.gif" );
+      e.dataTransfer.effectAllowed = 'copy';
+    }
+    document.getElementById('esto').ondragstart = alarrastraresto;
+  </script>
+  
+  
+  
+  <div id="aqui">Arrastrar archivos aqui</div>  
+  <script>
+    function alarrastraraqui (e ) {
+      e.dataTransfer.dropEffect = 'copy';
+      return false;
+    }
+    function alsoltar (e ) {
+      // Obtenemos el nombre del primer archivo ( files[0] )
+      alert ( e.dataTransfer.files[0].fileName );
+    }
+    document.getElementById('aqui').ondragover = alarrastraraqui;
+    document.getElementById('aqui').ondrop = alsoltar;
+  </script>
+  
+  
+  <div id="select">
+  Selecciona la cámara a utilizar:<br />
+  <!--  Seleccionar webcam -->
+  <device type="media" onchange="ver_cam ( this )" />
+</div>
+<div id="view" style="display: none" >
+  <!--  Vídeo de tu cámara -->
+  <video id="miVideo" autoplay></video>
+</div>
+<script>
+ function ver_cam ( media) {
+   // Obtenemos el stream de vídeo
+   video = document.getElementById ('miVideo')
+   // Cargamos el stream en <video>
+   video.src = media.data.URL;
+   // Reproducimos
+   video.play ();
+   // Ocultamos <device> y mostramos <video>
+   document.getElementById ('select') .style.display = 'none';
+   document.getElementById ('view') .style.display = 'block';
+ }
+</script>
+</body>
+
+</html>
